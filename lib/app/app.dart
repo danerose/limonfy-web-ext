@@ -25,8 +25,6 @@ class App extends StatelessWidget {
       providers: [
         BlocProvider<ConfigBloc>(
           create: (_) => ConfigBloc(
-            injector.get<GetUserAccountUsecase>(),
-            injector.get<GetUserProfileUsecase>(),
             injector.get<GetLocalConfigUsecase>(),
           ),
         ),

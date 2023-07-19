@@ -6,13 +6,22 @@ import 'package:limonfy/core/constants/routes.constants.dart';
 
 import 'package:limonfy/app/presentation/views/auth/auth.view.dart';
 import 'package:limonfy/app/presentation/views/home/home.view.dart';
+import 'package:limonfy/app/presentation/views/splash/splash.view.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoutes(RouteSettings settings) {
     switch (settings.name) {
-      case RoutesConstants.auth:
+      case RoutesConstants.initial:
         return MaterialPageRoute(
-          settings: const RouteSettings(name: RoutesConstants.auth),
+          settings: const RouteSettings(name: RoutesConstants.initial),
+          builder: (BuildContext context) {
+            injector<SizeConfig>().init(context);
+            return const SplashView();
+          },
+        );
+      case RoutesConstants.authLogin:
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: RoutesConstants.authLogin),
           builder: (BuildContext context) {
             injector<SizeConfig>().init(context);
             return const AuthView();

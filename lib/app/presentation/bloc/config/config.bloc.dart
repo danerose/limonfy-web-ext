@@ -11,12 +11,8 @@ import 'package:limonfy/app/presentation/bloc/config/config.state.dart';
 import 'package:limonfy/app/presentation/bloc/config/config.event.dart';
 
 class ConfigBloc extends Bloc<ConfigEvent, ConfigState> {
-  final GetUserAccountUsecase _getLocalUserAccountUsecase;
-  final GetUserProfileUsecase _getLocalUserProfileUsecase;
   final GetLocalConfigUsecase _localConfigUsecase;
   ConfigBloc(
-    this._getLocalUserAccountUsecase,
-    this._getLocalUserProfileUsecase,
     this._localConfigUsecase,
   ) : super(const ConfigState()) {
     on<ConfigInit>(_onInit);

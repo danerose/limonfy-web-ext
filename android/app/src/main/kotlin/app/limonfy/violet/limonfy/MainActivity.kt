@@ -1,4 +1,4 @@
-package app.limonfy.violet.limonfy
+package app.limonfy.violet
 
 import io.flutter.embedding.android.FlutterActivity
 

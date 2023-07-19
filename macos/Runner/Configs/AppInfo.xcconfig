@@ -8,7 +8,7 @@
 PRODUCT_NAME = limonfy
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = app.limonfy.violet.limonfy
+PRODUCT_BUNDLE_IDENTIFIER = app.limonfy.violet
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2023 app.limonfy.violet. All rights reserved.

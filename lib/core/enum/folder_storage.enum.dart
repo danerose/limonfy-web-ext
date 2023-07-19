@@ -1,0 +1,1 @@
+enum FolderStorageEnum { profile, collection }

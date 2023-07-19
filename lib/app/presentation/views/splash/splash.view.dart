@@ -2,18 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:limonfy/app/injection.dart';
-import 'package:limonfy/app/presentation/components/atoms/images/image.atom.dart';
-import 'package:limonfy/app/presentation/components/atoms/loading/default.loading.atom.dart';
 import 'package:limonfy/core/config/size/size.config.dart';
 import 'package:limonfy/core/constants/icons.constants.dart';
 
-import 'package:limonfy/core/enum/logged.enum.dart';
-import 'package:limonfy/core/constants/routes.constants.dart';
 import 'package:limonfy/core/constants/colors.constants.dart';
 
 import 'package:limonfy/app/presentation/bloc/config/config.bloc.dart';
 import 'package:limonfy/app/presentation/bloc/config/config.state.dart';
 import 'package:limonfy/app/presentation/bloc/config/config.event.dart';
+
+import 'package:limonfy/app/presentation/components/atoms/images/image.atom.dart';
+import 'package:limonfy/app/presentation/components/atoms/loading/default.loading.atom.dart';
 
 class SplashView extends StatelessWidget {
   const SplashView({super.key});

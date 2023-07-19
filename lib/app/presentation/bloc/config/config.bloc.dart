@@ -4,8 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:limonfy/core/enum/logged.enum.dart';
 
 import 'package:limonfy/app/domain/usecases/config/get_local_config.usecase.dart';
-import 'package:limonfy/app/domain/usecases/user/get_user_profile.usecase.dart';
-import 'package:limonfy/app/domain/usecases/user/get_user_account.usecase.dart';
 
 import 'package:limonfy/app/presentation/bloc/config/config.state.dart';
 import 'package:limonfy/app/presentation/bloc/config/config.event.dart';

@@ -7,8 +7,6 @@ import 'package:limonfy/core/config/theme/theme.dart';
 import 'package:limonfy/core/config/routes/routes.dart';
 import 'package:limonfy/core/constants/routes.constants.dart';
 
-import 'package:limonfy/app/domain/usecases/user/get_user_account.usecase.dart';
-import 'package:limonfy/app/domain/usecases/user/get_user_profile.usecase.dart';
 import 'package:limonfy/app/domain/usecases/config/get_local_config.usecase.dart';
 import 'package:limonfy/app/domain/usecases/collections/get_featured_collections.usecase.dart';
 

@@ -65,7 +65,9 @@ final ThemeData limonfyDark = ThemeData(
   inputDecorationTheme: InputDecorationTheme(
     filled: true,
     border: OutlineInputBorder(
-        borderSide: BorderSide.none, borderRadius: BorderRadius.circular(10)),
+      borderSide: BorderSide.none,
+      borderRadius: BorderRadius.circular(5),
+    ),
     focusedBorder: OutlineInputBorder(
       borderSide: BorderSide(
         color: injector.get<ColorsConstants>().primary,

@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:path_provider/path_provider.dart' as path;
 
 import 'package:limonfy/core/constants/box.constants.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -20,8 +19,7 @@ class HiveService {
   }
 
   Future<void> init() async {
-    final directory = await path.getApplicationDocumentsDirectory();
-    await Hive.initFlutter(directory.path);
+    await Hive.initFlutter();
     await _registerAdapters();
     await _initBoxes();
   }

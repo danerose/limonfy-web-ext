@@ -13,6 +13,8 @@ import 'package:limonfy/app/presentation/bloc/config/config.event.dart';
 
 import 'package:limonfy/app/presentation/components/atoms/images/image.atom.dart';
 import 'package:limonfy/app/presentation/components/atoms/loading/default.loading.atom.dart';
+import 'package:limonfy/core/constants/routes.constants.dart';
+import 'package:limonfy/core/enum/logged.enum.dart';
 
 class SplashView extends StatelessWidget {
   const SplashView({super.key});
@@ -24,19 +26,19 @@ class SplashView extends StatelessWidget {
         backgroundColor: injector.get<ColorsConstants>().primary,
         body: BlocListener<ConfigBloc, ConfigState>(
           listener: (BuildContext _, ConfigState state) {
-            // if (state.logged == LoggedEnum.logged) {
-            //   Navigator.pushNamedAndRemoveUntil(
-            //     context,
-            //     RoutesConstants.home,
-            //     (route) => false,
-            //   );
-            // } else {
-            //   Navigator.pushNamedAndRemoveUntil(
-            //     context,
-            //     RoutesConstants.authLogin,
-            //     (route) => false,
-            //   );
-            // }
+            if (state.logged == LoggedEnum.logged) {
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                RoutesConstants.home,
+                (route) => false,
+              );
+            } else {
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                RoutesConstants.authLogin,
+                (route) => false,
+              );
+            }
           },
           child: SafeArea(
             child: Stack(

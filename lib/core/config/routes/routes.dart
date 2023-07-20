@@ -4,9 +4,9 @@ import 'package:limonfy/app/injection.dart';
 import 'package:limonfy/core/config/size/size.config.dart';
 import 'package:limonfy/core/constants/routes.constants.dart';
 
-import 'package:limonfy/app/presentation/views/auth/auth.view.dart';
 import 'package:limonfy/app/presentation/views/home/home.view.dart';
 import 'package:limonfy/app/presentation/views/splash/splash.view.dart';
+import 'package:limonfy/app/presentation/views/auth/login_auth.view.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoutes(RouteSettings settings) {
@@ -24,7 +24,7 @@ class RouteGenerator {
           settings: const RouteSettings(name: RoutesConstants.authLogin),
           builder: (BuildContext context) {
             injector<SizeConfig>().init(context);
-            return const AuthView();
+            return const LoginAuthView();
           },
         );
       case RoutesConstants.home:

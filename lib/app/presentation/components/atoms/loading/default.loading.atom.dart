@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:limonfy/app/injection.dart';
-import 'package:limonfy/core/constants/colors.constants.dart';
+import "package:limonfy/app/injection.dart";
+import "package:limonfy/core/constants/colors.constants.dart";
 
 class DefaultLoadingAtom extends StatelessWidget {
   const DefaultLoadingAtom({super.key, this.size});

@@ -111,8 +111,9 @@ final ThemeData limonfyLight = ThemeData(
           ? injector.get<ColorsConstants>().input
           : ColorsConstants.grey,
     ),
-    border: const OutlineInputBorder(
+    border: OutlineInputBorder(
       borderSide: BorderSide.none,
+      borderRadius: BorderRadius.circular(5),
     ),
     activeIndicatorBorder: BorderSide(
       color: injector.get<ColorsConstants>().second,
@@ -123,6 +124,7 @@ final ThemeData limonfyLight = ThemeData(
         color: injector.get<ColorsConstants>().input,
         width: 1.5,
       ),
+      borderRadius: BorderRadius.circular(5),
     ),
   ),
 );

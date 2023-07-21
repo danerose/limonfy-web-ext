@@ -18,7 +18,6 @@ class CreateLimonfyAppLinkUsecase {
     required String sourceImageUrl,
     required String imageUrl,
     required bool private,
-    required String userAccountId,
     required String linkCollectionId,
   }) async {
     return await linksRepository.createLimofyAppLink(
@@ -29,7 +28,6 @@ class CreateLimonfyAppLinkUsecase {
       sourceImageUrl: sourceImageUrl,
       imageUrl: imageUrl,
       private: private,
-      userAccountId: userAccountId,
       linkCollectionId: linkCollectionId,
     );
   }

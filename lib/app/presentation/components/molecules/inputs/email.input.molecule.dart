@@ -10,10 +10,12 @@ class EmailInputMolecule extends StatelessWidget {
     super.key,
     required this.emailValidation,
     required this.onChanged,
+    required this.onSubmitted,
   });
 
   final EmailValidationEnum emailValidation;
   final Function(String value)? onChanged;
+  final Function(String value)? onSubmitted;
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +41,9 @@ class EmailInputMolecule extends StatelessWidget {
               helperStyle: const TextStyle(color: ColorsConstants.success),
               prefixIcon: const Icon(Icons.mail_outline_rounded),
             ),
+            onSubmitted: emailValidation == EmailValidationEnum.valid
+                ? onSubmitted
+                : null,
             onChanged: onChanged,
           ),
         ],

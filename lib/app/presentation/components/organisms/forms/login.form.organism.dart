@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:limonfy/app/presentation/components/molecules/buttons/flat.button.molecule.dart';
-import 'package:limonfy/app/presentation/components/molecules/error/auth.error.molecule.dart';
 import 'package:limonfy/core/enum/validations.enum.dart';
 
 import 'package:limonfy/core/extensions/localization.extension.dart';
@@ -10,7 +8,9 @@ import 'package:limonfy/app/presentation/bloc/auth/login/login.bloc.dart';
 import 'package:limonfy/app/presentation/bloc/auth/login/login.event.dart';
 import 'package:limonfy/app/presentation/bloc/auth/login/login.state.dart';
 
+import 'package:limonfy/app/presentation/components/molecules/error/auth.error.molecule.dart';
 import 'package:limonfy/app/presentation/components/molecules/inputs/email.input.molecule.dart';
+import 'package:limonfy/app/presentation/components/molecules/buttons/flat.button.molecule.dart';
 
 class LoginFormOrganism extends StatelessWidget {
   const LoginFormOrganism({super.key});
@@ -24,6 +24,11 @@ class LoginFormOrganism extends StatelessWidget {
           children: [
             EmailInputMolecule(
               emailValidation: state.valid,
+              onSubmitted: (value) {
+                if (!state.loading) {
+                  context.read<LoginBloc>().add(const LoginSubmitted());
+                }
+              },
               onChanged: (value) {
                 context.read<LoginBloc>().add(
                       LoginEmailChanged(

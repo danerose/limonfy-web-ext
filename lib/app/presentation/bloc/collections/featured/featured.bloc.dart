@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:limonfy/app/domain/entities/collection/link.collection.entity.dart';
 import 'package:limonfy/core/enum/exceptions.enum.dart';
 import 'package:limonfy/core/exceptions/custom.exceptions.dart';
 
@@ -10,11 +11,11 @@ import 'package:limonfy/app/domain/entities/collection/links_collections_respons
 import 'package:limonfy/app/domain/usecases/collections/get_featured_collections.usecase.dart';
 
 class FeaturedCollectionBloc extends Bloc<FeatCollecEvent, FeatCollecState> {
-  final GetFeaturedCollectionUsecase _remoteFeatureCollectionUsecase;
-  FeaturedCollectionBloc(this._remoteFeatureCollectionUsecase)
+  final GetFeaturedCollectionUsecase _getFeatureCollectionUsecase;
+  FeaturedCollectionBloc(this._getFeatureCollectionUsecase)
       : super(const FeatCollecState()) {
     on<FeatCollecInit>(_onInit);
-    on<FeatCollecSetReoder>(_onSetReoder);
+    on<FeaturedCollSet>(_onSet);
   }
 
   Future<void> _onInit(
@@ -22,7 +23,7 @@ class FeaturedCollectionBloc extends Bloc<FeatCollecEvent, FeatCollecState> {
     Emitter<FeatCollecState> emit,
   ) async {
     emit(state.copyWith(loading: true));
-    final res = await _remoteFeatureCollectionUsecase.execute(
+    final res = await _getFeatureCollectionUsecase.execute(
       refresh: event.refresh,
     );
     res.fold(
@@ -31,6 +32,7 @@ class FeaturedCollectionBloc extends Bloc<FeatCollecEvent, FeatCollecState> {
           status: fail.status,
           error: fail.error,
           message: fail.message,
+          collection: const LinkCollection.empty(),
           collections: [],
           loading: false,
         ),
@@ -41,6 +43,7 @@ class FeaturedCollectionBloc extends Bloc<FeatCollecEvent, FeatCollecState> {
             status: data.status,
             error: ExceptionEnum.none,
             message: data.message,
+            collection: const LinkCollection.empty(),
             collections: data.linksCollections,
             loading: false,
           ),
@@ -49,10 +52,10 @@ class FeaturedCollectionBloc extends Bloc<FeatCollecEvent, FeatCollecState> {
     );
   }
 
-  Future<void> _onSetReoder(
-    FeatCollecSetReoder event,
+  Future<void> _onSet(
+    FeaturedCollSet event,
     Emitter<FeatCollecState> emit,
   ) async {
-    emit(state.copyWith(collections: event.list));
+    emit(state.copyWith(collection: event.coll));
   }
 }

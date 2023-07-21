@@ -2,11 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:limonfy/app/presentation/bloc/collections/featured/featured.bloc.dart';
-import 'package:limonfy/app/presentation/bloc/collections/featured/featured.event.dart';
-import 'package:limonfy/app/presentation/components/molecules/buttons/flat.button.molecule.dart';
-import 'package:limonfy/app/presentation/components/molecules/buttons/text.button.molecule.dart';
-import 'package:limonfy/app/presentation/components/molecules/error/auth_verify.error.molecule.dart';
 import 'package:limonfy/core/constants/routes.constants.dart';
 
 import 'package:limonfy/core/extensions/localization.extension.dart';
@@ -17,6 +12,9 @@ import 'package:limonfy/app/presentation/bloc/auth/verify/verify.state.dart';
 import 'package:limonfy/app/presentation/bloc/auth/verify/verify_timer.cubit.dart';
 
 import 'package:limonfy/app/presentation/components/molecules/inputs/otp.input.molecule.dart';
+import 'package:limonfy/app/presentation/components/molecules/buttons/flat.button.molecule.dart';
+import 'package:limonfy/app/presentation/components/molecules/buttons/text.button.molecule.dart';
+import 'package:limonfy/app/presentation/components/molecules/error/auth_verify.error.molecule.dart';
 
 class OtpAuthFormOrganism extends StatefulWidget {
   const OtpAuthFormOrganism({super.key});
@@ -33,9 +31,6 @@ class _OtpAuthFormOrganismState extends State<OtpAuthFormOrganism> {
     return BlocConsumer<VerifyBloc, VerifyState>(
       listener: (BuildContext context, VerifyState state) {
         if (state.status == 200) {
-          context
-              .read<FeaturedCollectionBloc>()
-              .add(const FeatCollecInit(refresh: false));
           Navigator.pushNamedAndRemoveUntil(
             context,
             RoutesConstants.home,
@@ -59,6 +54,7 @@ class _OtpAuthFormOrganismState extends State<OtpAuthFormOrganism> {
                   FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
                   FilteringTextInputFormatter.digitsOnly
                 ],
+                onSubmitted: (value) {},
                 onChanged: (value) {
                   if (value.length == 4) {
                     context.read<VerifyBloc>().add(

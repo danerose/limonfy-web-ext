@@ -10,10 +10,14 @@
         "type": "dart",
         "program": "lib/main_local.dart",
         "args": [
+          "-d",
+          "chrome",
           "--flavor",
           "local",
+          "--web-renderer",
+          "html",
           "--target",
-          "lib/main_local.dart"
+          "lib/main_local.dart",
         ]
       },
       {

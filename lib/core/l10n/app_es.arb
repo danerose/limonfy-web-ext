@@ -122,6 +122,7 @@
     "linkMustContainHTTP": "Url/Link invalido, debe tener https://",
     "addHttps": "Agregar https://", 
     "linkValid": "!Excelente! Este url/link luce bien", 
+    "linkAlreadySaved": "Ya has guardado este Url/Link", 
     "linkCopyToClipboard": "Link copiado al Portapapeles",
     "openLink": "Abrir Link",
     "actions": "Acciones",
@@ -195,6 +196,7 @@
     "deleteAccountDes": "Eliminar tu Cuenta y todos tus datos.",
     "thisActionCannotBeUndoen": "Esta Acción no se puede Deshacer",
     "paymentCanceled": "Pago Cancelado",
+    "refresh": "Actualizar",
 
 
     "noInternetConnection": "Parece que no tienes Internet.",

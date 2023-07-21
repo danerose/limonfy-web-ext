@@ -7,6 +7,7 @@ class FeatCollecState extends Equatable {
     this.status = 0,
     this.loading = false,
     this.message = '',
+    this.collection = const LinkCollection.empty(),
     this.collections = const [],
     this.error = ExceptionEnum.none,
   });
@@ -14,6 +15,7 @@ class FeatCollecState extends Equatable {
   final int status;
   final bool loading;
   final String message;
+  final LinkCollection collection;
   final List<LinkCollection> collections;
   final ExceptionEnum error;
 
@@ -21,6 +23,7 @@ class FeatCollecState extends Equatable {
     int? status,
     bool? loading,
     String? message,
+    LinkCollection? collection,
     List<LinkCollection>? collections,
     ExceptionEnum? error,
   }) {
@@ -28,11 +31,19 @@ class FeatCollecState extends Equatable {
       status: status ?? this.status,
       loading: loading ?? this.loading,
       message: message ?? this.message,
+      collection: collection ?? this.collection,
       collections: collections ?? this.collections,
       error: error ?? this.error,
     );
   }
 
   @override
-  List<Object?> get props => [status, loading, message, collections, error];
+  List<Object?> get props => [
+        status,
+        loading,
+        message,
+        collection,
+        collections,
+        error,
+      ];
 }

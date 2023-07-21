@@ -15,7 +15,6 @@ abstract class LinksRepository {
     required String sourceImageUrl,
     required String imageUrl,
     required bool private,
-    required String userAccountId,
     required String linkCollectionId,
   });
 }

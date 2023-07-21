@@ -13,7 +13,7 @@ class FeatCollecInit extends FeatCollecEvent {
   final bool refresh;
 }
 
-class FeatCollecSetReoder extends FeatCollecEvent {
-  const FeatCollecSetReoder({required this.list});
-  final List<LinkCollection> list;
+class FeaturedCollSet extends FeatCollecEvent {
+  const FeaturedCollSet({required this.coll});
+  final LinkCollection coll;
 }

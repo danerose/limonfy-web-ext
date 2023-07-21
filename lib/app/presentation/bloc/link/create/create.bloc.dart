@@ -1,107 +1,56 @@
 import 'dart:developer';
 
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:limonfy/app/domain/entities/collection/links_collections_response.entity.dart';
-import 'package:limonfy/app/domain/usecases/collections/get_featured_collections.usecase.dart';
+import 'package:universal_html/html.dart' as html;
 
-import 'package:limonfy/core/enum/premium.enum.dart';
 import 'package:limonfy/core/enum/exceptions.enum.dart';
 
 import 'package:limonfy/core/exceptions/custom.exceptions.dart';
-import 'package:limonfy/core/extensions/validations.extension.dart';
 
 import 'package:limonfy/app/presentation/bloc/link/create/create.state.dart';
 import 'package:limonfy/app/presentation/bloc/link/create/create.event.dart';
 
 import 'package:limonfy/app/domain/entities/link/link_response.entity.dart';
-import 'package:limonfy/app/domain/entities/subscription/subscription_response.entity.dart';
 
 import 'package:limonfy/app/domain/usecases/links/create_limonfy_app_link.usecase.dart';
 import 'package:limonfy/app/domain/usecases/links/get_meta_tags_from_link.usecase.dart';
-import 'package:limonfy/app/domain/usecases/user/get_user_account_subscription.usecase.dart';
 
 class CreateLinkBloc extends Bloc<CreateLinkEvent, CreateLinkState> {
   final GetMetaTagsFromLinkUsecase _getMetaTagsFromLinkUsecase;
-  final GetFeaturedCollectionUsecase _getFeatureCollectionUsecase;
   final CreateLimonfyAppLinkUsecase _createLimonfyAppLinkUsecase;
-  final GetUserAccountSubscriptionUsecase _getUserAccountSubsUsecase;
   CreateLinkBloc(
     this._getMetaTagsFromLinkUsecase,
-    this._getFeatureCollectionUsecase,
     this._createLimonfyAppLinkUsecase,
-    this._getUserAccountSubsUsecase,
   ) : super(const CreateLinkState()) {
     on<CreateLinkOnInit>(_onInit);
-    on<CreateLinkSetUrl>(_setUrl);
     on<CreateLinkSubmitLink>(_submitLink);
     on<CreateLinkMakePrivate>(_makeLinkPrivate);
-    on<CreateLinkOnCollSelect>(_onCollectionSelect);
-    on<CreateLinkGetMetaTagsFromLink>(_getMetaTagsFromLink);
   }
 
   Future<void> _onInit(
     CreateLinkOnInit event,
     Emitter<CreateLinkState> emit,
   ) async {
-    emit(state.copyWith(
-      collection: event.coll,
-      loadingFCollections: true,
-      featColls: [],
-      premium: PremiumEnum.unknown,
-    ));
-    final sub = await _getUserAccountSubsUsecase.execute(refresh: false);
-    sub.fold(
-      (CustomException l) => emit(state.copyWith(premium: PremiumEnum.none)),
-      (SubscriptionResponse r) {
-        final p = r.subscription.premium;
-        emit(state.copyWith(
-          premium: p ? PremiumEnum.premium : PremiumEnum.none,
-        ));
-      },
-    );
-    final res = await _getFeatureCollectionUsecase.execute(refresh: false);
-    res.fold(
-      (CustomException l) => emit(state.copyWith()),
-      (LinksCollsResponse r) => emit(state.copyWith()),
-    );
-    emit(state.copyWith(
-      collection: event.coll,
-      clipBoardHasText: await Clipboard.hasStrings(),
-      loadingFCollections: false,
-    ));
-  }
-
-  Future<void> _onCollectionSelect(
-    CreateLinkOnCollSelect event,
-    Emitter<CreateLinkState> emit,
-  ) async {
-    emit(state.copyWith(collection: event.coll));
-  }
-
-  Future<void> _getMetaTagsFromLink(
-    CreateLinkGetMetaTagsFromLink event,
-    Emitter<CreateLinkState> emit,
-  ) async {
     emit(state.copyWith(loading: true));
+    final anchor = html.AnchorElement(href: html.window.location.href);
     final res = await _getMetaTagsFromLinkUsecase.execute(
-      url: event.url,
+      url: anchor.href ?? '',
     );
     res.fold(
       (CustomException fail) => emit(
         state.copyWith(
-          status: 0,
           error: ExceptionEnum.request,
           loading: false,
+          url: anchor.href,
         ),
       ),
       (LinkResponse data) {
         emit(
           state.copyWith(
-            status: data.status,
+            url: anchor.href,
             link: data.link,
             error: ExceptionEnum.none,
-            loading: true,
+            loading: false,
           ),
         );
       },
@@ -119,50 +68,35 @@ class CreateLinkBloc extends Bloc<CreateLinkEvent, CreateLinkState> {
     CreateLinkSubmitLink event,
     Emitter<CreateLinkState> emit,
   ) async {
+    emit(state.copyWith(creating: true));
     final res = await _createLimonfyAppLinkUsecase.execute(
       link: state.url,
-      title: event.link.title,
-      description: event.link.description,
-      sourceName: event.link.sourceName,
-      sourceImageUrl: event.link.sourceImageUrl,
-      imageUrl: event.link.imageUrl,
+      title: state.link.title,
+      description: state.link.description,
+      sourceName: state.link.sourceName,
+      sourceImageUrl: state.link.sourceImageUrl,
+      imageUrl: state.link.imageUrl,
       private: state.private,
-      userAccountId: event.link.userAccountId,
-      linkCollectionId: state.collection.id,
+      linkCollectionId: event.coll.id,
     );
     res.fold(
       (CustomException fail) => emit(
         state.copyWith(
           status: 0,
-          statusCreated: 0,
           error: ExceptionEnum.request,
-          loading: false,
+          creating: false,
         ),
       ),
       (LinkResponse data) async {
         emit(
           state.copyWith(
-            status: 0,
-            statusCreated: 200,
+            status: data.status,
+            exist: true,
             error: ExceptionEnum.none,
-            loading: false,
+            creating: false,
           ),
         );
       },
-    );
-  }
-
-  Future<void> _setUrl(
-    CreateLinkSetUrl event,
-    Emitter<CreateLinkState> emit,
-  ) async {
-    emit(
-      state.copyWith(
-        status: 0,
-        error: ExceptionEnum.none,
-        valid: event.url.isValidUrl,
-        url: event.url,
-      ),
     );
   }
 

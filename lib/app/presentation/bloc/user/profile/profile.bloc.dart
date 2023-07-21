@@ -30,12 +30,10 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     );
     res.fold(
       (CustomException l) => emit(state.copyWith(loading: false)),
-      (UserProfileResponse r) => emit(state.copyWith(profile: r.profile)),
+      (UserProfileResponse r) => emit(state.copyWith(
+        profile: r.profile,
+        loading: false,
+      )),
     );
-    try {
-      emit(state.copyWith(loading: false));
-    } catch (e) {
-      emit(state.copyWith(loading: false));
-    }
   }
 }

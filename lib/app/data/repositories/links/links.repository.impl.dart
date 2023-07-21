@@ -35,7 +35,6 @@ class LinksRepositoryImpl implements LinksRepository {
     required String sourceImageUrl,
     required String imageUrl,
     required bool private,
-    required String userAccountId,
     required String linkCollectionId,
   }) async {
     try {
@@ -47,7 +46,6 @@ class LinksRepositoryImpl implements LinksRepository {
         sourceImageUrl: sourceImageUrl,
         imageUrl: imageUrl,
         private: private,
-        userAccountId: userAccountId,
         linkCollectionId: linkCollectionId,
       );
       return Right(res.toEntity());

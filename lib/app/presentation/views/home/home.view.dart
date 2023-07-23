@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:limonfy/app/domain/usecases/collections/get_featured_local_collections.usecase.dart';
-import 'package:limonfy/app/domain/usecases/links/verify_exist_link.usecase.dart';
 
 import 'package:limonfy/app/injection.dart';
-import 'package:limonfy/app/presentation/components/atoms/texts/error.text.atom.dart';
-import 'package:limonfy/app/presentation/components/molecules/buttons/text.button.molecule.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:limonfy/core/config/size/size.config.dart';
 import 'package:limonfy/core/constants/colors.constants.dart';
 import 'package:limonfy/core/constants/limonfy.constants.dart';
@@ -13,6 +10,7 @@ import 'package:limonfy/core/extensions/localization.extension.dart';
 
 import 'package:limonfy/app/domain/usecases/user/get_user_account.usecase.dart';
 import 'package:limonfy/app/domain/usecases/user/get_user_profile.usecase.dart';
+import 'package:limonfy/app/domain/usecases/links/verify_exist_link.usecase.dart';
 import 'package:limonfy/app/domain/usecases/links/create_limonfy_app_link.usecase.dart';
 import 'package:limonfy/app/domain/usecases/links/get_meta_tags_from_link.usecase.dart';
 import 'package:limonfy/app/domain/usecases/user/get_user_account_subscription.usecase.dart';
@@ -32,10 +30,12 @@ import 'package:limonfy/app/presentation/bloc/collections/featured/featured.bloc
 import 'package:limonfy/app/presentation/bloc/collections/featured/featured.event.dart';
 import 'package:limonfy/app/presentation/bloc/collections/featured/featured.state.dart';
 
+import 'package:limonfy/app/presentation/components/atoms/texts/error.text.atom.dart';
+import 'package:limonfy/app/presentation/components/molecules/buttons/text.button.molecule.dart';
+
 import 'package:limonfy/app/presentation/components/organisms/appbar/main.appbar.organism.dart';
 import 'package:limonfy/app/presentation/components/organisms/forms/create_link.form.organism.dart';
 import 'package:limonfy/app/presentation/components/organisms/list/links_collections_avatar.list.organism.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});

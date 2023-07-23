@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:limonfy/app/injection.dart';
+
+import 'package:limonfy/core/constants/icons.constants.dart';
+import 'package:limonfy/core/constants/colors.constants.dart';
+import 'package:limonfy/core/extensions/localization.extension.dart';
+
 import 'package:limonfy/app/domain/usecases/auth/login.usecase.dart';
 import 'package:limonfy/app/domain/usecases/auth/verify.usecase.dart';
 
-import 'package:limonfy/app/injection.dart';
 import 'package:limonfy/app/presentation/bloc/auth/login/login.bloc.dart';
 import 'package:limonfy/app/presentation/bloc/auth/login/login.state.dart';
 import 'package:limonfy/app/presentation/bloc/auth/verify/verify.bloc.dart';
 import 'package:limonfy/app/presentation/bloc/auth/verify/verify.event.dart';
 import 'package:limonfy/app/presentation/bloc/auth/verify/verify_timer.cubit.dart';
-import 'package:limonfy/app/presentation/components/organisms/forms/login.form.organism.dart';
-import 'package:limonfy/app/presentation/components/organisms/forms/otp_auth.form.organism.dart';
-import 'package:limonfy/core/constants/colors.constants.dart';
-import 'package:limonfy/core/constants/icons.constants.dart';
 
 import 'package:limonfy/app/presentation/components/atoms/images/image.atom.dart';
-import 'package:limonfy/core/extensions/localization.extension.dart';
+
+import 'package:limonfy/app/presentation/components/organisms/forms/login.form.organism.dart';
+import 'package:limonfy/app/presentation/components/organisms/forms/otp_auth.form.organism.dart';
 
 class LoginAuthView extends StatelessWidget {
   const LoginAuthView({super.key});

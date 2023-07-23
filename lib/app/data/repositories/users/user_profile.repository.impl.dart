@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:limonfy/app/data/db/user/user_profile.dao.dart';
 import 'package:limonfy/core/exceptions/custom.exceptions.dart';
 
 import 'package:limonfy/app/domain/repositories/users/user_profile.repository.dart';
@@ -21,8 +22,36 @@ class UserProfileRepositoryImpl implements UserProfileRepository {
     required bool refresh,
   }) async {
     try {
-      final res = await userProfileRemoteSource.getUserProfile();
-      return Right(res.toEntity());
+      if (refresh) {
+        final res = await userProfileRemoteSource.getUserProfile();
+        await userLocalSource.setLocalUserProfile(UserProfileDao(
+          id: res.profile.id,
+          userName: res.profile.userName,
+          displayName: res.profile.displayName,
+          profileImage: res.profile.profileImage,
+          phoneCode: res.profile.phoneCode,
+          phoneNumber: res.profile.phoneNumber,
+        ));
+        return Right(res.toEntity());
+      } else {
+        final local = await userLocalSource.getLocalUserProfile();
+        if (local.id.isEmpty) {
+          final res = await userProfileRemoteSource.getUserProfile();
+          await userLocalSource.setLocalUserProfile(UserProfileDao(
+            id: res.profile.id,
+            userName: res.profile.userName,
+            displayName: res.profile.displayName,
+            profileImage: res.profile.profileImage,
+            phoneCode: res.profile.phoneCode,
+            phoneNumber: res.profile.phoneNumber,
+          ));
+          return Right(res.toEntity());
+        } else {
+          return Right(
+            UserProfileResponse(status: 200, profile: local, message: ''),
+          );
+        }
+      }
     } on CustomException catch (e) {
       return Left(e);
     } catch (e, s) {

@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:limonfy/app/domain/usecases/links/verify_exist_link.usecase.dart';
 import 'package:universal_html/html.dart' as html;
 
 import 'package:limonfy/core/enum/exceptions.enum.dart';
@@ -18,9 +19,11 @@ import 'package:limonfy/app/domain/usecases/links/get_meta_tags_from_link.usecas
 class CreateLinkBloc extends Bloc<CreateLinkEvent, CreateLinkState> {
   final GetMetaTagsFromLinkUsecase _getMetaTagsFromLinkUsecase;
   final CreateLimonfyAppLinkUsecase _createLimonfyAppLinkUsecase;
+  final VerifyExistLinkUsecase _verifyExistLinkUsecase;
   CreateLinkBloc(
     this._getMetaTagsFromLinkUsecase,
     this._createLimonfyAppLinkUsecase,
+    this._verifyExistLinkUsecase,
   ) : super(const CreateLinkState()) {
     on<CreateLinkOnInit>(_onInit);
     on<CreateLinkSubmitLink>(_submitLink);
@@ -33,6 +36,11 @@ class CreateLinkBloc extends Bloc<CreateLinkEvent, CreateLinkState> {
   ) async {
     emit(state.copyWith(loading: true));
     final anchor = html.AnchorElement(href: html.window.location.href);
+    late bool exist = false;
+    final verify = await _verifyExistLinkUsecase.execute(
+      link: anchor.href ?? '',
+    );
+    verify.fold((l) => exist = false, (r) => exist = r);
     final res = await _getMetaTagsFromLinkUsecase.execute(
       url: anchor.href ?? '',
     );
@@ -41,6 +49,7 @@ class CreateLinkBloc extends Bloc<CreateLinkEvent, CreateLinkState> {
         state.copyWith(
           error: ExceptionEnum.request,
           loading: false,
+          exist: exist,
           url: anchor.href,
         ),
       ),
@@ -49,6 +58,7 @@ class CreateLinkBloc extends Bloc<CreateLinkEvent, CreateLinkState> {
           state.copyWith(
             url: anchor.href,
             link: data.link,
+            exist: exist,
             error: ExceptionEnum.none,
             loading: false,
           ),

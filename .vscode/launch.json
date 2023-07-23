@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
       {
-        "name": "Limonfy-web-ext local (debug)",
+        "name": "Limonfy-web-ext local (Web debug)",
         "request": "launch",
         "type": "dart",
         "program": "lib/main_local.dart",
@@ -16,6 +16,18 @@
           "local",
           "--web-renderer",
           "html",
+          "--target",
+          "lib/main_local.dart",
+        ]
+      },
+      {
+        "name": "Limonfy-web-ext local (debug)",
+        "request": "launch",
+        "type": "dart",
+        "program": "lib/main_local.dart",
+        "args": [
+          "--flavor",
+          "local",
           "--target",
           "lib/main_local.dart",
         ]

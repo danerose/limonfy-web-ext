@@ -7,19 +7,16 @@ import 'package:limonfy/core/exceptions/custom.exceptions.dart';
 
 import 'package:limonfy/app/domain/entities/subscription/subscription.entity.dart';
 import 'package:limonfy/app/domain/entities/subscription/subscription_item.entity.dart';
-import 'package:limonfy/app/domain/entities/subscription/subscription_response.entity.dart';
-
-import 'package:limonfy/app/domain/usecases/user/get_user_account_subscription.usecase.dart';
 
 part 'account_event.dart';
 part 'account_state.dart';
 
 class AccountBloc extends Bloc<AccountEvent, AccountState> {
   final GetUserAccountUsecase _getUserAccountUsecase;
-  final GetUserAccountSubscriptionUsecase _getUserAccountSubsUsecase;
 
-  AccountBloc(this._getUserAccountUsecase, this._getUserAccountSubsUsecase)
-      : super(const AccountState()) {
+  AccountBloc(
+    this._getUserAccountUsecase,
+  ) : super(const AccountState()) {
     on<AccountInit>(_onInit);
   }
 
@@ -34,20 +31,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     account.fold(
       (CustomException l) => emit(state.copyWith(loading: false)),
       (UserAccountResponse r) {
-        emit(state.copyWith(account: r.account));
-      },
-    );
-    final subscription = await _getUserAccountSubsUsecase.execute(
-      refresh: event.refresh,
-    );
-    subscription.fold(
-      (CustomException l) => emit(state.copyWith(loading: false)),
-      (SubscriptionResponse r) {
-        emit(state.copyWith(
-          subscription: r.subscription,
-          subscriptionItem: r.subscriptionItem,
-          loading: false,
-        ));
+        emit(state.copyWith(account: r.account, loading: false));
       },
     );
   }

@@ -12,6 +12,7 @@ import 'package:limonfy/app/data/models/link/link_response.model.dart';
 import 'package:limonfy/core/services/db/hive.service.dart';
 import 'package:limonfy/core/services/network/network.service.dart';
 import 'package:limonfy/app/data/datasources/remote/interface/links/links.remote.source.dart';
+import 'package:limonfy/core/utils/validators.util.dart';
 
 class LinksRemoteSourceImpl implements LinksRemoteSource {
   final HttpService dio;
@@ -79,6 +80,31 @@ class LinksRemoteSourceImpl implements LinksRemoteSource {
         },
       );
       return LinkResponseModel.fromJson(response.data);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<bool> verifyExist({required String link}) async {
+    try {
+      final config = await hive.getBox<ConfigDao>(BoxConstants.config);
+      final response = await dio.post(
+        LimonfyEndpointConstants.linkVerifyExist,
+        options: config?.token == null
+            ? null
+            : Options(
+                headers: {
+                  "Authorization": "Bearer ${config?.token}",
+                  'Accept-Language': LangUtils.toLang(
+                    config?.languageCode,
+                    config?.countryCode,
+                  )
+                },
+              ),
+        body: {"link": link},
+      );
+      return ValidatorUtils.containsKey(response.data, 'exist', false);
     } catch (e) {
       rethrow;
     }

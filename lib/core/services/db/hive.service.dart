@@ -8,6 +8,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:limonfy/app/data/db/config/config.dao.dart';
 import 'package:limonfy/app/data/db/user/user_account.dao.dart';
 import 'package:limonfy/app/data/db/user/user_profile.dao.dart';
+import 'package:limonfy/app/data/db/subcription/subscription.dao.dart';
 import 'package:limonfy/app/data/db/collection/link.collection.dao.dart';
 
 class HiveService {
@@ -29,6 +30,7 @@ class HiveService {
     Hive.registerAdapter(UserProfileDaoAdapter());
     Hive.registerAdapter(LinkCollectionDaoAdapter());
     Hive.registerAdapter(ConfigDaoAdapter());
+    Hive.registerAdapter(SubscriptionDaoAdapter());
   }
 
   Future<void> _initBoxes() async {
@@ -55,6 +57,10 @@ class HiveService {
       );
       await Hive.openBox<ConfigDao>(
         BoxConstants.config,
+        encryptionCipher: HiveAesCipher(key),
+      );
+      await Hive.openBox<SubscriptionDao>(
+        BoxConstants.subscription,
         encryptionCipher: HiveAesCipher(key),
       );
     } catch (e) {

@@ -53,36 +53,38 @@ class LoginAuthView extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Visibility(
-                            visible: state.status != 200,
-                            replacement: Text(
-                              context.l10n.verificationCode,
-                              style: const TextStyle(fontSize: 20),
-                            ),
-                            child: Text(
-                              context.l10n.logIn,
-                              style: const TextStyle(fontSize: 20),
-                            ),
-                          ),
-                          Visibility(
-                            visible: state.status != 200,
-                            replacement: Text(
-                              context.l10n.verificationCodeEmailDescription,
-                              style: const TextStyle(
-                                color: ColorsConstants.disabled,
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Visibility(
+                              visible: state.status != 200,
+                              replacement: Text(
+                                context.l10n.verificationCode,
+                                style: const TextStyle(fontSize: 20),
+                              ),
+                              child: Text(
+                                context.l10n.logIn,
+                                style: const TextStyle(fontSize: 20),
                               ),
                             ),
-                            child: Text(
-                              context.l10n.happyToSeeYouAgain,
-                              style: const TextStyle(
-                                color: ColorsConstants.disabled,
+                            Visibility(
+                              visible: state.status != 200,
+                              replacement: Text(
+                                context.l10n.verificationCodeEmailDescription,
+                                style: const TextStyle(
+                                  color: ColorsConstants.disabled,
+                                ),
+                              ),
+                              child: Text(
+                                context.l10n.happyToSeeYouAgain,
+                                style: const TextStyle(
+                                  color: ColorsConstants.disabled,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                       ImageAtom(
                         height: 40,

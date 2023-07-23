@@ -147,6 +147,7 @@
     "nonPremiumCreateCollExplanation": "You cannot create a new Collection because you are not a Premium member.",
     "nonPremiumCreateSubExplanation": "You cannot create a new SubCollection because you are not a Premium member.",
     "nonPremiumActionExplanation": "You cannot make this action because you are not a Premium member.",
+    "nonPremiumSelectExplanation": "You cannot Select a Featured Collection because you are not a Premium member.",
     "becomePremium": "Get Premium",
     "premium": "Premium",
     "currentlyNoPremium": "You are currently not Premium.",
@@ -197,6 +198,7 @@
     "thisActionCannotBeUndoen": "This Action Cannot be Undone",
     "paymentCanceled": "Payment has been Canceled",
     "refresh": "Refresh",
+    "getAppSignUp": "Get App or Signup",
     
 
 

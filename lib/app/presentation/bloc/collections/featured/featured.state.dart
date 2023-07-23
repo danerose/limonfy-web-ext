@@ -6,6 +6,7 @@ class FeatCollecState extends Equatable {
   const FeatCollecState({
     this.status = 0,
     this.loading = false,
+    this.premium = false,
     this.message = '',
     this.collection = const LinkCollection.empty(),
     this.collections = const [],
@@ -14,6 +15,7 @@ class FeatCollecState extends Equatable {
 
   final int status;
   final bool loading;
+  final bool premium;
   final String message;
   final LinkCollection collection;
   final List<LinkCollection> collections;
@@ -22,6 +24,7 @@ class FeatCollecState extends Equatable {
   FeatCollecState copyWith({
     int? status,
     bool? loading,
+    bool? premium,
     String? message,
     LinkCollection? collection,
     List<LinkCollection>? collections,
@@ -30,6 +33,7 @@ class FeatCollecState extends Equatable {
     return FeatCollecState(
       status: status ?? this.status,
       loading: loading ?? this.loading,
+      premium: premium ?? this.premium,
       message: message ?? this.message,
       collection: collection ?? this.collection,
       collections: collections ?? this.collections,
@@ -41,6 +45,7 @@ class FeatCollecState extends Equatable {
   List<Object?> get props => [
         status,
         loading,
+        premium,
         message,
         collection,
         collections,

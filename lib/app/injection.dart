@@ -14,12 +14,14 @@ import 'package:limonfy/core/constants/colors.constants.dart';
 import 'package:limonfy/app/domain/usecases/auth/login.usecase.dart';
 import 'package:limonfy/app/domain/usecases/auth/verify.usecase.dart';
 import 'package:limonfy/app/domain/usecases/user/get_user_account.usecase.dart';
+import 'package:limonfy/app/domain/usecases/links/verify_exist_link.usecase.dart';
 import 'package:limonfy/app/domain/usecases/user/get_user_profile.usecase.dart';
 import 'package:limonfy/app/domain/usecases/config/get_local_config.usecase.dart';
 import 'package:limonfy/app/domain/usecases/links/get_meta_tags_from_link.usecase.dart';
 import 'package:limonfy/app/domain/usecases/links/create_limonfy_app_link.usecase.dart';
 import 'package:limonfy/app/domain/usecases/user/get_user_account_subscription.usecase.dart';
 import 'package:limonfy/app/domain/usecases/collections/get_featured_collections.usecase.dart';
+import 'package:limonfy/app/domain/usecases/collections/get_featured_local_collections.usecase.dart';
 
 import 'package:limonfy/app/domain/repositories/auth/auth.repository.dart';
 import 'package:limonfy/app/domain/repositories/links/links.repository.dart';
@@ -39,6 +41,7 @@ import 'package:limonfy/app/data/datasources/local/interface/user/user.local.sou
 import 'package:limonfy/app/data/datasources/remote/interface/user/user_profile.source.dart';
 import 'package:limonfy/app/data/datasources/remote/interface/user/user_account.source.dart';
 import 'package:limonfy/app/data/datasources/local/interface/config/config.local.source.dart';
+import 'package:limonfy/app/data/datasources/local/interface/subscription/subscription.local.source.dart';
 
 import 'package:limonfy/app/data/datasources/remote/interface/auth/auth.remote.source.dart';
 import 'package:limonfy/app/data/datasources/remote/interface/links/links.remote.source.dart';
@@ -53,6 +56,7 @@ import 'package:limonfy/app/data/datasources/remote/implementation/users/user_ac
 import 'package:limonfy/app/data/datasources/local/implementation/config/config.local.source.impl.dart';
 import 'package:limonfy/app/data/datasources/local/implementation/collection/collections.local.source.impl.dart';
 import 'package:limonfy/app/data/datasources/remote/implementation/collections/collections.remote.source.impl.dart';
+import 'package:limonfy/app/data/datasources/local/implementation/subscription/subscription.local.source.impl.dart';
 
 final injector = GetIt.instance;
 
@@ -126,6 +130,10 @@ void _authDependencies() {
 }
 
 void _userDependencies() {
+  injector.registerLazySingleton<SubscriptionLocalSource>(
+    () => SubscriptionLocalSourceImpl(hive: injector.get<HiveService>()),
+  );
+
   injector.registerLazySingleton<UserLocalSource>(
     () => UserLocalSourceImpl(hive: injector.get<HiveService>()),
   );
@@ -150,9 +158,12 @@ void _userDependencies() {
       userLocalSource: injector.get<UserLocalSource>(),
     ),
   );
+
   injector.registerLazySingleton<UserAccountRepository>(
     () => UserAccountRepositoryImpl(
+      userLocalSource: injector.get<UserLocalSource>(),
       userAccountRemoteSource: injector.get<UserAccountRemoteSource>(),
+      subscriptionLocalSource: injector.get<SubscriptionLocalSource>(),
     ),
   );
 
@@ -181,17 +192,25 @@ void _collectionsDependencies() {
       hive: injector.get<HiveService>(),
     ),
   );
+
   injector.registerLazySingleton<CollectionsRemoteSource>(
     () => CollectionRemoteSourceImpl(
       hive: injector.get<HiveService>(),
       dio: injector.get<HttpService>(),
     ),
   );
+
   injector.registerLazySingleton<CollectionsRepository>(
     () => CollectionsRepositoryImpl(
       configLocalSource: injector.get<ConfigLocalSource>(),
       collectionsLocalSource: injector.get<CollectionsLocalSource>(),
       collectionsRemoteSource: injector.get<CollectionsRemoteSource>(),
+    ),
+  );
+
+  injector.registerLazySingleton<GetLocalFeatureCollectionUsecase>(
+    () => GetLocalFeatureCollectionUsecase(
+      collectionsRepository: injector.get<CollectionsRepository>(),
     ),
   );
 
@@ -209,11 +228,19 @@ void _linkDependencies() {
       dio: injector.get<HttpService>(),
     ),
   );
+
   injector.registerLazySingleton<LinksRepository>(
     () => LinksRepositoryImpl(
       linksRemoteSource: injector.get<LinksRemoteSource>(),
     ),
   );
+
+  injector.registerLazySingleton<VerifyExistLinkUsecase>(
+    () => VerifyExistLinkUsecase(
+      linksRepository: injector.get<LinksRepository>(),
+    ),
+  );
+
   injector.registerLazySingleton<GetMetaTagsFromLinkUsecase>(
     () => GetMetaTagsFromLinkUsecase(
       linksRepository: injector.get<LinksRepository>(),

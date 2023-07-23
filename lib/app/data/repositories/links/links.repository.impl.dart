@@ -55,4 +55,18 @@ class LinksRepositoryImpl implements LinksRepository {
       return Left(CustomException.unknown(e: e, stack: s));
     }
   }
+
+  @override
+  Future<Either<CustomException, bool>> verifyExist({
+    required String link,
+  }) async {
+    try {
+      final res = await linksRemoteSource.verifyExist(link: link);
+      return Right(res);
+    } on CustomException catch (e) {
+      return Left(e);
+    } catch (e, s) {
+      return Left(CustomException.unknown(e: e, stack: s));
+    }
+  }
 }

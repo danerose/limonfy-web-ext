@@ -147,6 +147,7 @@
     "nonPremiumCreateCollExplanation": "No puedes crear una nueva Colección por que no eres Premium.",
     "nonPremiumCreateSubExplanation": "No puedes crear una nueva Sub Colección por que no eres Premium.",
     "nonPremiumActionExplanation": "No puedes realizar esta acción por que no eres Premium.",
+    "nonPremiumSelectExplanation": "No puedes seleccionar una Colección esta por que no eres Premium.",
     "becomePremium": "Ser Premium",
     "premium": "Premium",
     "currentlyNoPremium": "Actualmente no eres Premium.",
@@ -197,6 +198,7 @@
     "thisActionCannotBeUndoen": "Esta Acción no se puede Deshacer",
     "paymentCanceled": "Pago Cancelado",
     "refresh": "Actualizar",
+    "getAppSignUp": "Obtener App o Registrarme",
 
 
     "noInternetConnection": "Parece que no tienes Internet.",

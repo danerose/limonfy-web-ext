@@ -52,4 +52,17 @@ class CollectionsRepositoryImpl implements CollectionsRepository {
       return Left(CustomException.unknown(e: e, stack: s));
     }
   }
+
+  @override
+  Future<LinksCollsResponse> getLocalFeaturedCollection() async {
+    final list = await collectionsLocalSource.getListFeatCollecLink();
+    return LinksCollsResponse(
+      status: 200,
+      page: 0,
+      limit: 0,
+      pages: 0,
+      linksCollections: list.map((e) => e.toEntity()).toList(),
+      message: '',
+    );
+  }
 }

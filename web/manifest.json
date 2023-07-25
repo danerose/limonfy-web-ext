@@ -1,9 +1,9 @@
 {
     "name": "Limonfy Web Extension",
     "short_name": "Limonfy",
-    "version": "0.0.0.1",
+    "version": "0.0.1.0",
     "manifest_version": 3,
-    "description": "Limonfy, Save and Manage your Link from your favorites Websites",
+    "description": "Limonfy: Save and Manage your Links from your favorites Websites",
     "content_security_policy": {
         "extension_pages": "script-src 'self' ; object-src 'self'"
     },

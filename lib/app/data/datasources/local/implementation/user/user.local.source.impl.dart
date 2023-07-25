@@ -1,8 +1,9 @@
-import 'package:limonfy/app/data/db/user/user_account.dao.dart';
 import 'package:limonfy/core/constants/box.constants.dart';
 import 'package:limonfy/core/services/db/hive.service.dart';
 
 import 'package:limonfy/app/data/db/user/user_profile.dao.dart';
+import 'package:limonfy/app/data/db/user/user_account.dao.dart';
+
 import 'package:limonfy/app/domain/entities/user/user_account.entity.dart';
 import 'package:limonfy/app/domain/entities/user/user_profile.entity.dart';
 

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:limonfy/app/domain/entities/collection/link.collection.entity.dart';
-import 'package:limonfy/app/presentation/components/molecules/avatars/collection.avatart.molecule.dart';
-import 'package:limonfy/app/presentation/components/molecules/avatars/loading_collection.avatar.molecule.dart';
 import 'package:limonfy/core/constants/colors.constants.dart';
 import 'package:limonfy/core/extensions/localization.extension.dart';
+
+import 'package:limonfy/app/domain/entities/collection/link.collection.entity.dart';
+
+import 'package:limonfy/app/presentation/components/molecules/avatars/collection.avatart.molecule.dart';
+import 'package:limonfy/app/presentation/components/molecules/avatars/loading_collection.avatar.molecule.dart';
 
 class CollectionsAvatarListOrganism extends StatelessWidget {
   const CollectionsAvatarListOrganism({

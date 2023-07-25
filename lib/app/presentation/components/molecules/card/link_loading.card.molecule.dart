@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:limonfy/app/injection.dart';
-import 'package:limonfy/core/config/size/size.config.dart';
 import 'package:skeletons/skeletons.dart';
+import 'package:limonfy/core/config/size/size.config.dart';
 
 class LinkLoadingCardMolecule extends StatelessWidget {
   const LinkLoadingCardMolecule({super.key});

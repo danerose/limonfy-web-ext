@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:limonfy/app/domain/usecases/links/convert_link_from_js.usecase.dart';
 
 import 'package:limonfy/app/injection.dart';
 import 'package:limonfy/core/config/size/size.config.dart';
@@ -12,6 +11,7 @@ import 'package:limonfy/core/extensions/localization.extension.dart';
 import 'package:limonfy/app/domain/usecases/user/get_user_account.usecase.dart';
 import 'package:limonfy/app/domain/usecases/user/get_user_profile.usecase.dart';
 import 'package:limonfy/app/domain/usecases/links/verify_exist_link.usecase.dart';
+import 'package:limonfy/app/domain/usecases/links/convert_link_from_js.usecase.dart';
 import 'package:limonfy/app/domain/usecases/links/create_limonfy_app_link.usecase.dart';
 import 'package:limonfy/app/domain/usecases/user/get_user_account_subscription.usecase.dart';
 import 'package:limonfy/app/domain/usecases/collections/get_featured_collections.usecase.dart';

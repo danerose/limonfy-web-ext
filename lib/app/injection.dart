@@ -3,13 +3,13 @@ import 'package:get_it/get_it.dart';
 
 import 'package:limonfy/core/env/env.dart';
 import 'package:limonfy/core/config/size/size.config.dart';
-import 'package:limonfy/core/constants/limonfy.constants.dart';
 
 import 'package:limonfy/core/services/db/hive.service.dart';
 import 'package:limonfy/core/services/network/network.service.dart';
 
 import 'package:limonfy/core/constants/icons.constants.dart';
 import 'package:limonfy/core/constants/colors.constants.dart';
+import 'package:limonfy/core/constants/limonfy.constants.dart';
 
 import 'package:limonfy/app/domain/usecases/auth/login.usecase.dart';
 import 'package:limonfy/app/domain/usecases/auth/verify.usecase.dart';

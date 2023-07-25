@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:limonfy/app/presentation/components/atoms/images/loading.image.atom.dart';
 
 import 'package:limonfy/core/constants/colors.constants.dart';
 
 import 'package:limonfy/app/presentation/components/atoms/images/error.image.atom.dart';
+import 'package:limonfy/app/presentation/components/atoms/images/loading.image.atom.dart';
 
 class ImageMolecule extends StatelessWidget {
   final String url;

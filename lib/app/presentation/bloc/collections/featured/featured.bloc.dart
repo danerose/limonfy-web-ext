@@ -36,6 +36,7 @@ class FeaturedCollectionBloc extends Bloc<FeatCollecEvent, FeatCollecState> {
       (CustomException l) => premium = false,
       (SubscriptionResponse r) => premium = r.subscription.premium,
     );
+    premium = true;
     if (premium) {
       final res = await _getFeatureCollectionUsecase.execute(
         refresh: event.refresh,

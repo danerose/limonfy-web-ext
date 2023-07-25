@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:limonfy/app/injection.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:limonfy/core/config/behavior/scroll.behavior.dart';
 
 import 'package:limonfy/core/config/theme/theme.dart';
 import 'package:limonfy/core/config/routes/routes.dart';
@@ -26,6 +27,7 @@ class App extends StatelessWidget {
         builder: (BuildContext _, ConfigState state) {
           return MaterialApp(
             title: 'Limonfy',
+            scrollBehavior: MyCustomScrollBehavior(),
             initialRoute: RoutesConstants.initial,
             themeMode: state.theme,
             theme: CustomTheme.light(),

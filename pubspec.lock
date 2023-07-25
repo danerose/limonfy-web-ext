@@ -169,6 +169,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.3"
+  chromeapi:
+    dependency: "direct main"
+    description:
+      name: chromeapi
+      sha256: d54607701f890cb0b008ab5deb7ab1d3781b8969d88b096322d0b5716cd021ac
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.8"
   clock:
     dependency: transitive
     description:
@@ -510,7 +518,7 @@ packages:
     source: hosted
     version: "1.0.4"
   js:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: js
       sha256: f2c445dce49627136094980615a031419f7f3eb393237e4ecd97ac15dea343f3

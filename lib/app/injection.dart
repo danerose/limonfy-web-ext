@@ -14,10 +14,10 @@ import 'package:limonfy/core/constants/colors.constants.dart';
 import 'package:limonfy/app/domain/usecases/auth/login.usecase.dart';
 import 'package:limonfy/app/domain/usecases/auth/verify.usecase.dart';
 import 'package:limonfy/app/domain/usecases/user/get_user_account.usecase.dart';
-import 'package:limonfy/app/domain/usecases/links/verify_exist_link.usecase.dart';
 import 'package:limonfy/app/domain/usecases/user/get_user_profile.usecase.dart';
 import 'package:limonfy/app/domain/usecases/config/get_local_config.usecase.dart';
-import 'package:limonfy/app/domain/usecases/links/get_meta_tags_from_link.usecase.dart';
+import 'package:limonfy/app/domain/usecases/links/verify_exist_link.usecase.dart';
+import 'package:limonfy/app/domain/usecases/links/convert_link_from_js.usecase.dart';
 import 'package:limonfy/app/domain/usecases/links/create_limonfy_app_link.usecase.dart';
 import 'package:limonfy/app/domain/usecases/user/get_user_account_subscription.usecase.dart';
 import 'package:limonfy/app/domain/usecases/collections/get_featured_collections.usecase.dart';
@@ -38,6 +38,7 @@ import 'package:limonfy/app/data/repositories/users/user_account.repository.impl
 import 'package:limonfy/app/data/repositories/collections/collections.repository.impl.dart';
 
 import 'package:limonfy/app/data/datasources/local/interface/user/user.local.source.dart';
+import 'package:limonfy/app/data/datasources/local/interface/links/links.local.source.dart';
 import 'package:limonfy/app/data/datasources/remote/interface/user/user_profile.source.dart';
 import 'package:limonfy/app/data/datasources/remote/interface/user/user_account.source.dart';
 import 'package:limonfy/app/data/datasources/local/interface/config/config.local.source.dart';
@@ -50,6 +51,7 @@ import 'package:limonfy/app/data/datasources/remote/interface/collections/collec
 
 import 'package:limonfy/app/data/datasources/local/implementation/user/user.local.source.impl.dart';
 import 'package:limonfy/app/data/datasources/remote/implementation/auth/auth.remote.source.impl.dart';
+import 'package:limonfy/app/data/datasources/local/implementation/links/links.local.source.impl.dart';
 import 'package:limonfy/app/data/datasources/remote/implementation/users/user_profile.source.impl.dart';
 import 'package:limonfy/app/data/datasources/remote/implementation/links/links.remote.source.impl.dart';
 import 'package:limonfy/app/data/datasources/remote/implementation/users/user_account.source.impl.dart';
@@ -222,6 +224,9 @@ void _collectionsDependencies() {
 }
 
 void _linkDependencies() {
+  injector.registerLazySingleton<LinksLocalSource>(
+    () => LinksLocalSourceImpl(),
+  );
   injector.registerLazySingleton<LinksRemoteSource>(
     () => LinksRemoteSourceImpl(
       hive: injector.get<HiveService>(),
@@ -231,6 +236,7 @@ void _linkDependencies() {
 
   injector.registerLazySingleton<LinksRepository>(
     () => LinksRepositoryImpl(
+      linksLocalSource: injector.get<LinksLocalSource>(),
       linksRemoteSource: injector.get<LinksRemoteSource>(),
     ),
   );
@@ -241,8 +247,8 @@ void _linkDependencies() {
     ),
   );
 
-  injector.registerLazySingleton<GetMetaTagsFromLinkUsecase>(
-    () => GetMetaTagsFromLinkUsecase(
+  injector.registerLazySingleton<ConvertLinkFromJsUsecase>(
+    () => ConvertLinkFromJsUsecase(
       linksRepository: injector.get<LinksRepository>(),
     ),
   );

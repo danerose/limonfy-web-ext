@@ -1,4 +1,6 @@
 import 'package:dartz/dartz.dart';
+import 'package:limonfy/app/data/datasources/local/interface/links/links.local.source.dart';
+import 'package:limonfy/app/domain/entities/link/link.entity.dart';
 
 import 'package:limonfy/core/exceptions/custom.exceptions.dart';
 
@@ -8,9 +10,13 @@ import 'package:limonfy/app/domain/repositories/links/links.repository.dart';
 import 'package:limonfy/app/data/datasources/remote/interface/links/links.remote.source.dart';
 
 class LinksRepositoryImpl implements LinksRepository {
+  final LinksLocalSource linksLocalSource;
   final LinksRemoteSource linksRemoteSource;
 
-  const LinksRepositoryImpl({required this.linksRemoteSource});
+  const LinksRepositoryImpl({
+    required this.linksLocalSource,
+    required this.linksRemoteSource,
+  });
 
   @override
   Future<Either<CustomException, LinkResponse>> getMetaTagsFromLink({
@@ -67,6 +73,20 @@ class LinksRepositoryImpl implements LinksRepository {
       return Left(e);
     } catch (e, s) {
       return Left(CustomException.unknown(e: e, stack: s));
+    }
+  }
+
+  @override
+  Future<Link> convertFromScrip({
+    required String link,
+  }) async {
+    try {
+      final res = await linksLocalSource.convertFromScript(link: link);
+      return res.toEntity();
+    } on CustomException catch (_) {
+      return const Link.empty();
+    } catch (e) {
+      return const Link.empty();
     }
   }
 }

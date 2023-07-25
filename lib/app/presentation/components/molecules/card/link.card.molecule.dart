@@ -28,15 +28,23 @@ class LinkCardMolecule extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  link.title,
-                  style: const TextStyle(fontSize: 14),
+                SizedBox(
+                  width: injector.get<SizeConfig>().sizeH * 40,
+                  child: Text(
+                    link.title,
+                    maxLines: 2,
+                    style: const TextStyle(fontSize: 12),
+                  ),
                 ),
-                Text(
-                  link.description,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: ColorsConstants.disabled,
+                SizedBox(
+                  width: injector.get<SizeConfig>().sizeH * 40,
+                  child: Text(
+                    link.description,
+                    maxLines: 3,
+                    style: const TextStyle(
+                      fontSize: 10,
+                      color: ColorsConstants.disabled,
+                    ),
                   ),
                 )
               ],

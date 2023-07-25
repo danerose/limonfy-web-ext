@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:html/dom.dart' as htmldom;
+import 'package:limonfy/core/constants/limonfy.constants.dart';
 import 'package:limonfy/core/utils/html.util.dart';
 
 import 'package:limonfy/core/utils/validators.util.dart';
@@ -38,11 +39,28 @@ class LinkModel extends Equatable {
     return LinkModel(
       id: ValidatorUtils.containsKey(json, '_id', ''),
       link: ValidatorUtils.containsKey(json, 'link', ''),
-      title: ValidatorUtils.containsKey(json, 'title', ''),
-      description: ValidatorUtils.containsKey(json, 'description', ''),
-      sourceName: ValidatorUtils.containsKey(json, 'source_name', ''),
-      sourceImageUrl: ValidatorUtils.containsKey(json, 'source_image_url', ''),
-      imageUrl: ValidatorUtils.containsKey(json, 'image_url', ''),
+      title:
+          ValidatorUtils.containsKey(json, 'title', LimonfyConstants.limonfy),
+      description: ValidatorUtils.containsKey(
+        json,
+        'description',
+        LimonfyConstants.limonfy,
+      ),
+      sourceName: ValidatorUtils.containsKey(
+        json,
+        'source_name',
+        LimonfyConstants.limonfy,
+      ),
+      sourceImageUrl: ValidatorUtils.containsKey(
+        json,
+        'source_image_url',
+        LimonfyConstants.urlIcon,
+      ),
+      imageUrl: ValidatorUtils.containsKey(
+        json,
+        'image_url',
+        LimonfyConstants.urlBanner,
+      ),
       private: ValidatorUtils.containsKey(json, 'private', false),
       linkSaveMethodId: ValidatorUtils.containsKey(
         json,

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:limonfy/app/domain/usecases/links/convert_link_from_js.usecase.dart';
 
 import 'package:limonfy/app/injection.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:limonfy/core/config/size/size.config.dart';
 import 'package:limonfy/core/constants/colors.constants.dart';
 import 'package:limonfy/core/constants/limonfy.constants.dart';
@@ -12,7 +13,6 @@ import 'package:limonfy/app/domain/usecases/user/get_user_account.usecase.dart';
 import 'package:limonfy/app/domain/usecases/user/get_user_profile.usecase.dart';
 import 'package:limonfy/app/domain/usecases/links/verify_exist_link.usecase.dart';
 import 'package:limonfy/app/domain/usecases/links/create_limonfy_app_link.usecase.dart';
-import 'package:limonfy/app/domain/usecases/links/get_meta_tags_from_link.usecase.dart';
 import 'package:limonfy/app/domain/usecases/user/get_user_account_subscription.usecase.dart';
 import 'package:limonfy/app/domain/usecases/collections/get_featured_collections.usecase.dart';
 
@@ -36,6 +36,7 @@ import 'package:limonfy/app/presentation/components/molecules/buttons/text.butto
 import 'package:limonfy/app/presentation/components/organisms/appbar/main.appbar.organism.dart';
 import 'package:limonfy/app/presentation/components/organisms/forms/create_link.form.organism.dart';
 import 'package:limonfy/app/presentation/components/organisms/list/links_collections_avatar.list.organism.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -55,9 +56,9 @@ class HomeView extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => CreateLinkBloc(
-            injector.get<GetMetaTagsFromLinkUsecase>(),
             injector.get<CreateLimonfyAppLinkUsecase>(),
             injector.get<VerifyExistLinkUsecase>(),
+            injector.get<ConvertLinkFromJsUsecase>(),
           )..add(const CreateLinkOnInit()),
         ),
         BlocProvider<FeaturedCollectionBloc>(
@@ -177,48 +178,47 @@ class HomeView extends StatelessWidget {
                       ),
                     );
                   } else {
-                    return CreateLinkFormOrganism(
-                      link: create.link,
-                      loading: create.loading,
-                      creating: create.creating,
-                      private: create.private,
-                      onPrivate: (v) {
-                        context
-                            .read<CreateLinkBloc>()
-                            .add(CreateLinkMakePrivate(private: v));
-                      },
-                      onSaved: () {
-                        context.read<CreateLinkBloc>().add(CreateLinkSubmitLink(
-                              coll: context
-                                  .read<FeaturedCollectionBloc>()
-                                  .state
-                                  .collection,
-                            ));
-                      },
+                    return Column(
+                      children: [
+                        CreateLinkFormOrganism(
+                          link: create.link,
+                          loading: create.loading,
+                          creating: create.creating,
+                          private: create.private,
+                          onPrivate: (v) {
+                            context
+                                .read<CreateLinkBloc>()
+                                .add(CreateLinkMakePrivate(private: v));
+                          },
+                          onSaved: () {
+                            context
+                                .read<CreateLinkBloc>()
+                                .add(CreateLinkSubmitLink(
+                                  coll: context
+                                      .read<FeaturedCollectionBloc>()
+                                      .state
+                                      .collection,
+                                ));
+                          },
+                        ),
+                        const SizedBox(height: 30),
+                        Center(
+                          child: TextButtonMolecule(
+                            text: context.l10n.getAppSignUp,
+                            underline: true,
+                            onPressed: () async {
+                              await launchUrl(
+                                Uri.parse(LimonfyConstants.limonfyWeb),
+                              );
+                            },
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                      ],
                     );
                   }
                 },
               ),
-              const SizedBox(height: 30),
-              Center(
-                child: TextButtonMolecule(
-                  text: context.l10n.getAppSignUp,
-                  underline: true,
-                  onPressed: () async {
-                    await launchUrl(
-                      Uri.parse(LimonfyConstants.limonfyWeb),
-                    ).then((value) {
-                      if (!value) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                              content: Text(context.l10n.somethingWentWrong)),
-                        );
-                      }
-                    });
-                  },
-                ),
-              ),
-              const SizedBox(height: 10),
             ],
           ),
         ),

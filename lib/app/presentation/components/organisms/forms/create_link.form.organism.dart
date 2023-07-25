@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:limonfy/app/domain/entities/link/link.entity.dart';
-import 'package:limonfy/app/presentation/components/molecules/buttons/flat.button.molecule.dart';
-import 'package:limonfy/app/presentation/components/molecules/card/link.card.molecule.dart';
-import 'package:limonfy/app/presentation/components/molecules/card/link_loading.card.molecule.dart';
+
+import 'package:limonfy/core/enum/validations.enum.dart';
+import 'package:limonfy/core/extensions/validations.extension.dart';
 import 'package:limonfy/core/extensions/localization.extension.dart';
+
+import 'package:limonfy/app/domain/entities/link/link.entity.dart';
+
+import 'package:limonfy/app/presentation/components/molecules/card/link.card.molecule.dart';
+import 'package:limonfy/app/presentation/components/molecules/buttons/flat.button.molecule.dart';
+import 'package:limonfy/app/presentation/components/molecules/card/link_loading.card.molecule.dart';
 
 class CreateLinkFormOrganism extends StatelessWidget {
   const CreateLinkFormOrganism({
@@ -57,7 +62,13 @@ class CreateLinkFormOrganism extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.all(4.0),
-            child: Center(
+            child: Visibility(
+              visible: link.link.isValidUrl == UrlValidationEnum.valid,
+              replacement: FlatButtonMolecule(
+                disable: true,
+                text: context.l10n.linkInvalid,
+                onPressed: () {},
+              ),
               child: FlatButtonMolecule(
                 loading: creating,
                 text: context.l10n.save,

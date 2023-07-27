@@ -1,7 +1,7 @@
 {
     "name": "Limonfy Web Extension",
     "short_name": "Limonfy",
-    "version": "0.0.1.0",
+    "version": "0.0.1.1",
     "manifest_version": 3,
     "description": "Limonfy: Save and Manage your Links from your favorites Websites",
     "content_security_policy": {
@@ -10,7 +10,7 @@
     "background": {
         "service_worker": "background.js"
     },
-    "permissions": ["contextMenus", "clipboardWrite", "clipboardRead", "tabs","activeTab"],
+    "permissions": ["tabs","activeTab"],
     "action": {
         "default_popup": "index.html",
         "default_icon": {

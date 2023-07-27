@@ -54,7 +54,7 @@ class CreateLinkBloc extends Bloc<CreateLinkEvent, CreateLinkState> {
       (l) => emit(state.copyWith(
         exist: false,
         loading: false,
-        url: link.imageUrl,
+        url: link.link,
         valid: link.link.isValidUrl,
         link: link,
       )),
@@ -62,7 +62,7 @@ class CreateLinkBloc extends Bloc<CreateLinkEvent, CreateLinkState> {
         state.copyWith(
           exist: r,
           valid: link.link.isValidUrl,
-          url: link.imageUrl,
+          url: link.link,
           link: link,
           loading: false,
         ),
@@ -104,7 +104,7 @@ class CreateLinkBloc extends Bloc<CreateLinkEvent, CreateLinkState> {
   ) async {
     emit(state.copyWith(creating: true));
     final res = await _createLimonfyAppLinkUsecase.execute(
-      link: state.url,
+      link: state.link.link,
       title: state.link.title,
       description: state.link.description,
       sourceName: state.link.sourceName,
